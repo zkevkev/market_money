@@ -1,6 +1,4 @@
 class Market < ApplicationRecord
-  before_save { |market| market.vendor_count = count_vendors }
-
   has_many :market_vendors
   has_many :vendors, through: :market_vendors
 
