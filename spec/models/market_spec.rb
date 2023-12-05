@@ -16,4 +16,21 @@ RSpec.describe Market, type: :model do
     it { should validate_presence_of(:lat) }
     it { should validate_presence_of(:lon) }
   end
+
+  before(:each) do
+    @market = create(:market)
+  end
+
+  describe 'instance methods' do
+    describe '#count_vendors' do
+      it 'returns a count of vendors associated with a market' do
+        expect(@market.send(:count_vendors)).to eq(0)
+        
+        vendors = create_list(:vendor, 3)
+        @market.vendors << vendors
+        
+        expect(@market.send(:count_vendors)).to eq(3)
+      end
+    end
+  end
 end
