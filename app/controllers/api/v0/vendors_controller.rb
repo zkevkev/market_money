@@ -1,6 +1,6 @@
 class Api::V0::VendorsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found_response
-  rescue_from ActiveRecord::RecordInvalid, with: :bad_request
+  rescue_from ActiveRecord::RecordInvalid, with: :bad_request_response
   
   def index
     market = Market.find(params[:market_id])
@@ -13,12 +13,7 @@ class Api::V0::VendorsController < ApplicationController
 
   # should this be using the serializer? (probably)
   def create
-    vendor = render json: Vendor.new(vendor_params)
-    if vendor.save!
-      render json: Vendor.create!(vendor_params), status: 201
-    else
-      
-    end
+    render json: Vendor.create!(vendor_params)
   end
 
   private
