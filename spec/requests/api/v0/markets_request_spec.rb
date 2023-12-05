@@ -86,7 +86,7 @@ describe 'Markets API' do
   context 'sad path' do
     it "will gracefully handle if a market id doesn't exist" do
       get "/api/v0/markets/1"
-require 'pry'; binding.pry
+
       expect(response).to_not be_successful
       expect(response.status).to eq(404)
 
