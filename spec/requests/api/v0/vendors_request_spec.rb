@@ -82,7 +82,7 @@ describe 'Vendors API' do
     
       post '/api/v0/vendors', headers: headers, params: JSON.generate(vendor: vendor_params)
       created_vendor = Vendor.last
-    
+
       expect(response).to be_successful
       expect(created_vendor.name).to eq(vendor_params[:name])
       expect(created_vendor.description).to eq(vendor_params[:description])
@@ -94,7 +94,7 @@ describe 'Vendors API' do
 
   context 'sad path' do
     it "will gracefully handle if a market id doesn't exist" do
-      get "/api/v0/markets/0/vendors"
+      get '/api/v0/markets/0/vendors'
 
       expect(response).to_not be_successful
       expect(response.status).to eq(404)
@@ -102,12 +102,12 @@ describe 'Vendors API' do
       data = JSON.parse(response.body, symbolize_names: true)
 
       expect(data[:errors]).to be_a(Array)
-      expect(data[:errors].first[:status]).to eq("404")
+      expect(data[:errors].first[:status]).to eq('404')
       expect(data[:errors].first[:detail]).to eq("Couldn't find Market with 'id'=0")
     end
 
     it "will gracefully handle if a vendor id doesn't exist" do
-      get "/api/v0/vendors/0"
+      get '/api/v0/vendors/0'
 
       expect(response).to_not be_successful
       expect(response.status).to eq(404)
@@ -115,8 +115,28 @@ describe 'Vendors API' do
       data = JSON.parse(response.body, symbolize_names: true)
 
       expect(data[:errors]).to be_a(Array)
-      expect(data[:errors].first[:status]).to eq("404")
+      expect(data[:errors].first[:status]).to eq('404')
       expect(data[:errors].first[:detail]).to eq("Couldn't find Vendor with 'id'=0")
+    end
+
+    it 'will gracefully handle if invalid info is entered' do
+      vendor_params = ({
+                      name: 'Murder on the Orient Express',
+                      description: 'a mystery',
+                      credit_accepted: true
+                    })
+      headers = {'CONTENT_TYPE' => 'application/json'}
+    
+      post '/api/v0/vendors', headers: headers, params: JSON.generate(vendor: vendor_params)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(data[:errors]).to be_a(Array)
+      expect(data[:errors].first[:status]).to eq("400")
+      expect(data[:errors].first[:detail]).to eq("")
     end
   end
 end
