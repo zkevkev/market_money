@@ -7,6 +7,7 @@ class Market < ApplicationRecord
   validates :name, :street, :city, :county, :state, :zip, :lat, :lon, presence: true
 
   private
+  
     def count_vendors
       vendors.count
     end
