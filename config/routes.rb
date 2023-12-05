@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v0 do
       resources :markets, only: [:index, :show] do
-        resources :vendors, controller: 'vendors', only: :index
+        resources :vendors, only: :index
       end
 
-      resources :vendors, only: :show
+      resources :vendors, except: :index
     end
   end
 end

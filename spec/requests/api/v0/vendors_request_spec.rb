@@ -69,6 +69,27 @@ describe 'Vendors API' do
       expect(vendor[:attributes]).to have_key(:credit_accepted)
       expect(vendor[:attributes][:credit_accepted]).to be_a(TrueClass).or be_a(FalseClass)
     end
+
+    it 'can create a new book' do
+      vendor_params = ({
+                      name: 'Murder on the Orient Express',
+                      description: 'a mystery',
+                      contact_name: 'Agatha Christie',
+                      contact_phone: '867-5309',
+                      credit_accepted: true
+                    })
+      headers = {'CONTENT_TYPE' => 'application/json'}
+    
+      post '/api/v0/vendors', headers: headers, params: JSON.generate(vendor: vendor_params)
+      created_vendor = Vendor.last
+    
+      expect(response).to be_successful
+      expect(created_vendor.name).to eq(vendor_params[:name])
+      expect(created_vendor.description).to eq(vendor_params[:description])
+      expect(created_vendor.contact_name).to eq(vendor_params[:contact_name])
+      expect(created_vendor.contact_phone).to eq(vendor_params[:contact_phone])
+      expect(created_vendor.credit_accepted).to eq(vendor_params[:credit_accepted])
+    end
   end
 
   context 'sad path' do
@@ -85,7 +106,7 @@ describe 'Vendors API' do
       expect(data[:errors].first[:detail]).to eq("Couldn't find Market with 'id'=0")
     end
 
-    it "will gracefully handle if a market id doesn't exist" do
+    it "will gracefully handle if a vendor id doesn't exist" do
       get "/api/v0/vendors/0"
 
       expect(response).to_not be_successful
