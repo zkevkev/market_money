@@ -11,11 +11,14 @@ class Api::V0::VendorsController < ApplicationController
     render json: VendorSerializer.new(Vendor.find(params[:id]))
   end
 
+  # sad path postman not functional (must return original object)
   # should this be using the serializer? (probably)
   def create
     render json: Vendor.create!(vendor_params), status: 201
   end
 
+  # not functional, not updating any fields
+  # should this be using the serializer? (probably)
   def update
     render json: Vendor.update(params[:id], vendor_params), status: 201
   end
