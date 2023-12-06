@@ -110,7 +110,7 @@ describe 'Vendors API' do
   end
 
   context 'sad path' do
-    it "will gracefully handle if a market id doesn't exist" do
+    it "index will gracefully handle if a market id doesn't exist" do
       get '/api/v0/markets/0/vendors'
 
       expect(response).to_not be_successful
@@ -123,7 +123,7 @@ describe 'Vendors API' do
       expect(data[:errors].first[:detail]).to eq("Couldn't find Market with 'id'=0")
     end
 
-    it "will gracefully handle if a vendor id doesn't exist" do
+    it "show will gracefully handle if a vendor id doesn't exist" do
       get '/api/v0/vendors/0'
 
       expect(response).to_not be_successful
@@ -136,7 +136,7 @@ describe 'Vendors API' do
       expect(data[:errors].first[:detail]).to eq("Couldn't find Vendor with 'id'=0")
     end
 
-    it 'will gracefully handle if invalid info is entered' do
+    it 'create will gracefully handle if invalid info is entered' do
       vendor_params = ({
                       name: 'Murder on the Orient Express',
                       description: 'a mystery',
@@ -154,6 +154,43 @@ describe 'Vendors API' do
       expect(data[:errors]).to be_a(Array)
       expect(data[:errors].first[:status]).to eq("400")
       expect(data[:errors].first[:detail]).to eq("Validation failed: Contact name can't be blank, Contact phone can't be blank")
+    end
+
+    it "update will gracefully handle if a vendor id doesn't exist" do
+      vendor_params = ({
+                      description: 'a mystery',
+                      contact_phone: '867-5309',
+                      credit_accepted: true
+                    })
+      headers = {'CONTENT_TYPE' => 'application/json'}
+    
+      patch "/api/v0/vendors/0", headers: headers, params: JSON.generate(vendor: vendor_params)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+
+      expect(data[:errors]).to be_a(Array)
+      expect(data[:errors].first[:status]).to eq('404')
+      expect(data[:errors].first[:detail]).to eq("Couldn't find Vendor with 'id'=0")
+    end
+
+    it 'update will gracefully handle if invalid data is entered' do
+      vendor = create(:vendor)
+      vendor_params = ({
+                      description: '',
+                      contact_phone: '867-5309',
+                      credit_accepted: true
+                    })
+      headers = {'CONTENT_TYPE' => 'application/json'}
+    
+      patch "/api/v0/vendors/#{vendor.id}", headers: headers, params: JSON.generate(vendor: vendor_params)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      expect(data[:errors]).to be_a(Array)
+      expect(data[:errors].first[:status]).to eq("400")
+      expect(data[:errors].first[:detail]).to eq("Validation failed: Description can't be blank")
     end
   end
 end
