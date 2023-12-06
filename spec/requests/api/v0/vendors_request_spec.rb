@@ -102,6 +102,8 @@ describe 'Vendors API' do
     
       patch "/api/v0/vendors/#{vendor.id}", headers: headers, params: JSON.generate(vendor: vendor_params)
 
+      vendor = Vendor.find(vendor.id)
+
       expect(response).to be_successful
       expect(vendor.description).to eq(vendor_params[:description])
       expect(vendor.contact_phone).to eq(vendor_params[:contact_phone])

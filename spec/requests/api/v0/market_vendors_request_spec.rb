@@ -37,8 +37,8 @@ describe 'MarketVendors API' do
       data = JSON.parse(response.body, symbolize_names: true)
 
       expect(data[:errors]).to be_a(Array)
-      expect(data[:errors].first[:status]).to eq("404")
-      expect(data[:errors].first[:detail]).to eq("Validation failed: Market must exist")
+      expect(data[:errors].first[:status]).to eq('404')
+      expect(data[:errors].first[:detail]).to eq('Validation failed: Market must exist')
     end
 
     it "create will gracefully handle if a vendor id doesn't exist" do
@@ -57,8 +57,28 @@ describe 'MarketVendors API' do
       data = JSON.parse(response.body, symbolize_names: true)
 
       expect(data[:errors]).to be_a(Array)
-      expect(data[:errors].first[:status]).to eq("404")
-      expect(data[:errors].first[:detail]).to eq("Validation failed: Vendor must exist")
+      expect(data[:errors].first[:status]).to eq('404')
+      expect(data[:errors].first[:detail]).to eq('Validation failed: Vendor must exist')
+    end
+
+    it 'create will gracefully handle if an id is not provided' do
+      market = create(:market)
+      market_vendor_params = ({
+                      market_id: market.id,
+                      vendor_id: nil
+                    })
+      headers = {'CONTENT_TYPE' => 'application/json'}
+    
+      post '/api/v0/market_vendors', headers: headers, params: JSON.generate(market_vendor: market_vendor_params)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(data[:errors]).to be_a(Array)
+      expect(data[:errors].first[:status]).to eq('400')
+      expect(data[:errors].first[:detail]).to eq("Validation failed: Vendor must exist, Vendor can't be blank")
     end
 
     it 'create will gracefully handle if a market_vendor already exists with given ids' do
@@ -79,7 +99,7 @@ describe 'MarketVendors API' do
       data = JSON.parse(response.body, symbolize_names: true)
 
       expect(data[:errors]).to be_a(Array)
-      expect(data[:errors].first[:status]).to eq("422")
+      expect(data[:errors].first[:status]).to eq('422')
       expect(data[:errors].first[:detail]).to eq("Validation failed: Market vendor asociation between market with market_id=#{market.id} and vendor_id=#{vendor.id} already exists")
     end
   end
