@@ -5,9 +5,11 @@ class Vendor < ApplicationRecord
   validates :name, :description, :contact_name, :contact_phone, presence: true
   validate :validate_credit_accepted
 
-  def validate_credit_accepted
-    if credit_accepted.nil?
-      errors.add(:credit_accepted, "must be true or false")
+  private
+
+    def validate_credit_accepted
+      if credit_accepted.nil?
+        errors.add(:credit_accepted, "must be true or false")
+      end
     end
-  end
 end

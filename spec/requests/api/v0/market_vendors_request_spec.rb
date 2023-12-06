@@ -62,7 +62,25 @@ describe 'MarketVendors API' do
     end
 
     it 'create will gracefully handle if a market_vendor already exists with given ids' do
-      
+      market = create(:market)
+      vendor = create(:vendor)
+      market_vendor = create(:market_vendor, market: market, vendor: vendor)
+      market_vendor_params = ({
+                      market_id: market.id,
+                      vendor_id: vendor.id
+                    })
+      headers = {'CONTENT_TYPE' => 'application/json'}
+    
+      post '/api/v0/market_vendors', headers: headers, params: JSON.generate(market_vendor: market_vendor_params)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(422)
+
+      data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(data[:errors]).to be_a(Array)
+      expect(data[:errors].first[:status]).to eq("422")
+      expect(data[:errors].first[:detail]).to eq("Validation failed: Market vendor asociation between market with market_id=#{market.id} and vendor_id=#{vendor.id} already exists")
     end
   end
 end
