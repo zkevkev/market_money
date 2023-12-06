@@ -178,7 +178,7 @@ describe 'Vendors API' do
                     })
       headers = {'CONTENT_TYPE' => 'application/json'}
     
-      patch "/api/v0/vendors/0", headers: headers, params: JSON.generate(vendor: vendor_params)
+      patch '/api/v0/vendors/0', headers: headers, params: JSON.generate(vendor: vendor_params)
 
       expect(response).to_not be_successful
       expect(response.status).to eq(404)
@@ -207,12 +207,12 @@ describe 'Vendors API' do
       data = JSON.parse(response.body, symbolize_names: true)
 
       expect(data[:errors]).to be_a(Array)
-      expect(data[:errors].first[:status]).to eq("400")
+      expect(data[:errors].first[:status]).to eq('400')
       expect(data[:errors].first[:detail]).to eq("Validation failed: Description can't be blank")
     end
 
     it "delete will gracefully handle if a vendor id doesn't exist" do
-      get '/api/v0/vendors/0'
+      delete '/api/v0/vendors/0'
 
       expect(response).to_not be_successful
       expect(response.status).to eq(404)
