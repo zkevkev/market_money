@@ -3,9 +3,6 @@ class Api::V0::MarketVendorsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :bad_request_response
 
   def create
-    # Vendor.find(params[:market_vendor][:vendor_id])
-    # Market.find(params[:market_vendor][:market_id])
-    
     market_vendor = MarketVendor.create!(market_vendor_params)
     render json: MarketVendorSerializer.new(market_vendor), status: 201
   end

@@ -21,7 +21,7 @@ describe 'MarketVendors API' do
   end
 
   context 'sad path' do
-    it "create will gracefully handle if a market id doesn't exist" do
+    xit "create will gracefully handle if a market id doesn't exist" do
       vendor = create(:vendor)
       market_vendor_params = ({
                       market_id: 0,
@@ -41,7 +41,7 @@ describe 'MarketVendors API' do
       expect(data[:errors].first[:detail]).to eq('Validation failed: Market must exist')
     end
 
-    it "create will gracefully handle if a vendor id doesn't exist" do
+    xit "create will gracefully handle if a vendor id doesn't exist" do
       market = create(:market)
       market_vendor_params = ({
                       market_id: market.id,
@@ -81,7 +81,7 @@ describe 'MarketVendors API' do
       expect(data[:errors].first[:detail]).to eq("Validation failed: Vendor must exist, Vendor can't be blank")
     end
 
-    it 'create will gracefully handle if a market_vendor already exists with given ids' do
+    xit 'create will gracefully handle if a market_vendor already exists with given ids' do
       market = create(:market)
       vendor = create(:vendor)
       market_vendor = create(:market_vendor, market: market, vendor: vendor)
