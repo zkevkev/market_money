@@ -70,7 +70,7 @@ describe 'Vendors API' do
       expect(vendor[:attributes][:credit_accepted]).to be_a(TrueClass).or be_a(FalseClass)
     end
 
-    it 'can create a new book' do
+    it 'can create a new vendor' do
       vendor_params = ({
                       name: 'Murder on the Orient Express',
                       description: 'a mystery',
@@ -89,6 +89,23 @@ describe 'Vendors API' do
       expect(created_vendor.contact_name).to eq(vendor_params[:contact_name])
       expect(created_vendor.contact_phone).to eq(vendor_params[:contact_phone])
       expect(created_vendor.credit_accepted).to eq(vendor_params[:credit_accepted])
+    end
+
+    it 'can update a vendor' do
+      vendor = create(:vendor)
+      vendor_params = ({
+                      description: 'a mystery',
+                      contact_phone: '867-5309',
+                      credit_accepted: true
+                    })
+      headers = {'CONTENT_TYPE' => 'application/json'}
+    
+      patch "/api/v0/vendors/#{vendor.id}", headers: headers, params: JSON.generate(vendor: vendor_params)
+
+      expect(response).to be_successful
+      expect(vendor.description).to eq(vendor_params[:description])
+      expect(vendor.contact_phone).to eq(vendor_params[:contact_phone])
+      expect(vendor.credit_accepted).to eq(vendor_params[:credit_accepted])
     end
   end
 

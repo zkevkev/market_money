@@ -13,7 +13,12 @@ class Api::V0::VendorsController < ApplicationController
 
   # should this be using the serializer? (probably)
   def create
-    render json: Vendor.create!(vendor_params)
+    render json: Vendor.create!(vendor_params), status: 201
+  end
+
+  def update
+    vendor = Vendor.find(params[:id])
+    render json: vendor.update!(vendor_params), status: 201
   end
 
   private

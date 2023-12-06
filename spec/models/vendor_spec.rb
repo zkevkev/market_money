@@ -11,6 +11,16 @@ RSpec.describe Vendor, type: :model do
     it { should validate_presence_of(:description) }
     it { should validate_presence_of(:contact_name) }
     it { should validate_presence_of(:contact_phone) }
-    it { should validate_presence_of(:credit_accepted) }
+    # look into shoulda-matchers docs
+    # it { should validate(:validate_credit_accepted) }
+  end
+
+  describe 'instance methods' do
+    # ask in check in?
+    describe '#validate_credit_accepted' do
+      it '' do
+        
+      end
+    end
   end
 end
