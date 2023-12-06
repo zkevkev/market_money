@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       end
 
       resources :vendors, except: :index
+      resources :market_vendors, only: [:create, :destroy]
     end
   end
 end

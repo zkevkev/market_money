@@ -14,7 +14,8 @@ class Api::V0::VendorsController < ApplicationController
   # sad path postman not functional (must return original object)
   # should this be using the serializer? (probably)
   def create
-    render json: Vendor.create!(vendor_params), status: 201
+    vendor = Vendor.create!(vendor_params)
+    render json: VendorSerializer.new(vendor), status: 201
   end
 
   # not functional, not updating any fields
@@ -24,7 +25,7 @@ class Api::V0::VendorsController < ApplicationController
   end
 
   def destroy
-    render json: Vendor.delete(params[:id])
+    render json: Vendor.delete(params[:id]), status: 204
   end
 
   private
