@@ -11,14 +11,11 @@ class Api::V0::MarketVendorsController < ApplicationController
       market_id = invalid.record.market_id
       vendor_id = invalid.record.vendor_id
       if MarketVendor.find_by(market_id: market_id, vendor_id: vendor_id).present?
-        render json: ErrorSerializer.new(ErrorMessage.new("Validation failed: Market vendor asociation between market with market_id=#{market_id} and vendor_id=#{vendor_id} already exists", 422))
-        .serialize_json, status: :unprocessable_entity
+        unprocessable_entity_response(market_id, vendor_id, invalid)
       elsif market_id.nil? || vendor_id.nil?
-        render json: ErrorSerializer.new(ErrorMessage.new(invalid.message, 400))
-        .serialize_json, status: :bad_request
+        bad_request_response(invalid)
       elsif market_id != nil && vendor_id != nil
-        render json: ErrorSerializer.new(ErrorMessage.new(invalid.message, 404))
-        .serialize_json, status: :not_found
+        not_found_response(invalid)
       end
     end
   end
@@ -39,13 +36,13 @@ class Api::V0::MarketVendorsController < ApplicationController
       params.require(:market_vendor).permit(:market_id, :vendor_id)
     end
 
-    # def bad_request_response(exception)
-    #   render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 400))
-    #     .serialize_json, status: :bad_request
-    # end
+    def bad_request_response(exception)
+      render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 400))
+        .serialize_json, status: :bad_request
+    end
 
-    # def invalid_record_response(exception)
-    #   render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 400))
-    #     .serialize_json, status: :invalid_record
-    # end
+    def unprocessable_entity_response(market_id, vendor_id, exception)
+      render json: ErrorSerializer.new(ErrorMessage.new("Validation failed: Market vendor asociation between market with market_id=#{market_id} and vendor_id=#{vendor_id} already exists", 422))
+        .serialize_json, status: :unprocessable_entity
+    end
 end
