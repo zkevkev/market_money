@@ -95,6 +95,7 @@ describe 'Markets API' do
     describe 'search function' do
       it 'allows the user to search by state only' do
         market = create(:market, state: 'CO')
+        other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = { state: 'CO' }
         headers = {'CONTENT_TYPE' => 'application/json'}
 
@@ -141,6 +142,7 @@ describe 'Markets API' do
 
       it 'allows the user to search by name only' do
         market = create(:market, name: 'Agatha Christie')
+        other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = ({
                         name: 'Agatha Christie'
                       })
@@ -187,8 +189,9 @@ describe 'Markets API' do
         expect(market_info[:attributes][:vendor_count]).to be_a(Integer)
       end
 
-      xit 'allows the user to search by city and state' do
+      it 'allows the user to search by city and state' do
         market = create(:market, city: 'Denver', state: 'CO')
+        other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = ({
                         city: 'Denver',
                         state: 'CO'
@@ -236,8 +239,9 @@ describe 'Markets API' do
         expect(market_info[:attributes][:vendor_count]).to be_a(Integer)
       end
 
-      xit 'allows the user to search by state and name' do
+      it 'allows the user to search by state and name' do
         market = create(:market, state: 'CO', name: 'Agatha Christie')
+        other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = ({
                         state: 'CO',
                         name: 'Agatha Christie'
@@ -257,7 +261,7 @@ describe 'Markets API' do
         expect(market_info).to have_key(:id)
         expect(market_info[:id]).to eq(market.id.to_s)
 
-        expect(market[:attributes]).to have_key(:name)
+        expect(market_info[:attributes]).to have_key(:name)
         expect(market_info[:attributes][:name]).to eq(market.name)
 
         expect(market_info[:attributes]).to have_key(:street)
@@ -285,8 +289,9 @@ describe 'Markets API' do
         expect(market_info[:attributes][:vendor_count]).to be_a(Integer)
       end
 
-      xit 'allows the user to search by city, state, and name' do
+      it 'allows the user to search by city, state, and name' do
         market = create(:market, city: 'Denver', state: 'CO', name: 'Agatha Christie')
+        other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = ({
                         city: 'Denver',
                         state: 'CO',
@@ -307,7 +312,7 @@ describe 'Markets API' do
         expect(market_info).to have_key(:id)
         expect(market_info[:id]).to eq(market.id.to_s)
 
-        expect(market[:attributes]).to have_key(:name)
+        expect(market_info[:attributes]).to have_key(:name)
         expect(market_info[:attributes][:name]).to eq(market.name)
 
         expect(market_info[:attributes]).to have_key(:street)
@@ -352,7 +357,7 @@ describe 'Markets API' do
     end
 
     describe 'search function' do
-      xit 'does not allow the user to search by city without state' do
+      it 'does not allow the user to search by city without state' do
         market = create(:market, city: 'Denver')
         search_params = ({
                         city: 'Denver'
@@ -370,7 +375,7 @@ describe 'Markets API' do
         expect(data[:errors].first[:detail]).to eq('Invalid set of parameters. Please provide a valid set of parameters to perform a search with this endpoint.')
       end
 
-      xit 'does not allow the user to search by city and name without state' do
+      it 'does not allow the user to search by city and name without state' do
         market = create(:market, city: 'Denver')
         search_params = ({
                         city: 'Denver',
@@ -389,7 +394,7 @@ describe 'Markets API' do
         expect(data[:errors].first[:detail]).to eq('Invalid set of parameters. Please provide a valid set of parameters to perform a search with this endpoint.')
       end
 
-      xit 'must be given at least search parameter' do
+      it 'must be given at least search parameter' do
         market = create(:market, city: 'Denver')
         search_params = ({})
         headers = {'CONTENT_TYPE' => 'application/json'}
