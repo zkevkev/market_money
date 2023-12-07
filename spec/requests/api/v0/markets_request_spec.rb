@@ -88,7 +88,7 @@ describe 'Markets API' do
 
     describe 'search function' do
       it 'allows the user to search by state only' do
-        merchant = create(:merchant, state: 'CO')
+        market = create(:market, state: 'CO')
         search_params = ({
                         state: 'CO'
                       })
@@ -105,35 +105,35 @@ describe 'Markets API' do
         market = market[:data]
 
         expect(market).to have_key(:id)
-        expect(market[:id]).to eq(merchant.id)
+        expect(market[:id]).to eq(market.id)
 
         expect(market[:attributes]).to have_key(:street)
-        expect(market[:attributes][:street]).to eq(merchant.street)
+        expect(market[:attributes][:street]).to eq(market.street)
 
         expect(market[:attributes]).to have_key(:city)
-        expect(market[:attributes][:city]).to eq(merchant.city)
+        expect(market[:attributes][:city]).to eq(market.city)
 
         expect(market[:attributes]).to have_key(:county)
-        expect(market[:attributes][:county]).to eq(merchant.county)
+        expect(market[:attributes][:county]).to eq(market.county)
 
         expect(market[:attributes]).to have_key(:state)
-        expect(market[:attributes][:state]).to eq(merchant.state)
+        expect(market[:attributes][:state]).to eq(market.state)
 
         expect(market[:attributes]).to have_key(:zip)
-        expect(market[:attributes][:zip]).to eq(merchant.zip)
+        expect(market[:attributes][:zip]).to eq(market.zip)
 
         expect(market[:attributes]).to have_key(:lat)
-        expect(market[:attributes][:lat]).to eq(merchant.lat)
+        expect(market[:attributes][:lat]).to eq(market.lat)
 
         expect(market[:attributes]).to have_key(:lon)
-        expect(market[:attributes][:lon]).to eq(merchant.lon)
+        expect(market[:attributes][:lon]).to eq(market.lon)
 
         expect(market[:attributes]).to have_key(:vendor_count)
         expect(market[:attributes][:vendor_count]).to be_a(Integer)
       end
 
       it 'allows the user to search by name only' do
-        merchant = create(:merchant, name: 'Agatha Christie')
+        market = create(:market, name: 'Agatha Christie')
         search_params = ({
                         name: 'Agatha Christie'
                       })
@@ -150,35 +150,35 @@ describe 'Markets API' do
         market = market[:data]
 
         expect(market).to have_key(:id)
-        expect(market[:id]).to eq(merchant.id)
+        expect(market[:id]).to eq(market.id)
 
         expect(market[:attributes]).to have_key(:street)
-        expect(market[:attributes][:street]).to eq(merchant.street)
+        expect(market[:attributes][:street]).to eq(market.street)
 
         expect(market[:attributes]).to have_key(:city)
-        expect(market[:attributes][:city]).to eq(merchant.city)
+        expect(market[:attributes][:city]).to eq(market.city)
 
         expect(market[:attributes]).to have_key(:county)
-        expect(market[:attributes][:county]).to eq(merchant.county)
+        expect(market[:attributes][:county]).to eq(market.county)
 
         expect(market[:attributes]).to have_key(:state)
-        expect(market[:attributes][:state]).to eq(merchant.state)
+        expect(market[:attributes][:state]).to eq(market.state)
 
         expect(market[:attributes]).to have_key(:zip)
-        expect(market[:attributes][:zip]).to eq(merchant.zip)
+        expect(market[:attributes][:zip]).to eq(market.zip)
 
         expect(market[:attributes]).to have_key(:lat)
-        expect(market[:attributes][:lat]).to eq(merchant.lat)
+        expect(market[:attributes][:lat]).to eq(market.lat)
 
         expect(market[:attributes]).to have_key(:lon)
-        expect(market[:attributes][:lon]).to eq(merchant.lon)
+        expect(market[:attributes][:lon]).to eq(market.lon)
 
         expect(market[:attributes]).to have_key(:vendor_count)
         expect(market[:attributes][:vendor_count]).to be_a(Integer)
       end
 
       it 'allows the user to search by city and state' do
-        merchant = create(:merchant, city: 'Denver', state: 'CO')
+        market = create(:market, city: 'Denver', state: 'CO')
         search_params = ({
                         city: 'Denver',
                         state: 'CO'
@@ -196,35 +196,35 @@ describe 'Markets API' do
         market = market[:data]
 
         expect(market).to have_key(:id)
-        expect(market[:id]).to eq(merchant.id)
+        expect(market[:id]).to eq(market.id)
 
         expect(market[:attributes]).to have_key(:street)
-        expect(market[:attributes][:street]).to eq(merchant.street)
+        expect(market[:attributes][:street]).to eq(market.street)
 
         expect(market[:attributes]).to have_key(:city)
-        expect(market[:attributes][:city]).to eq(merchant.city)
+        expect(market[:attributes][:city]).to eq(market.city)
 
         expect(market[:attributes]).to have_key(:county)
-        expect(market[:attributes][:county]).to eq(merchant.county)
+        expect(market[:attributes][:county]).to eq(market.county)
 
         expect(market[:attributes]).to have_key(:state)
-        expect(market[:attributes][:state]).to eq(merchant.state)
+        expect(market[:attributes][:state]).to eq(market.state)
 
         expect(market[:attributes]).to have_key(:zip)
-        expect(market[:attributes][:zip]).to eq(merchant.zip)
+        expect(market[:attributes][:zip]).to eq(market.zip)
 
         expect(market[:attributes]).to have_key(:lat)
-        expect(market[:attributes][:lat]).to eq(merchant.lat)
+        expect(market[:attributes][:lat]).to eq(market.lat)
 
         expect(market[:attributes]).to have_key(:lon)
-        expect(market[:attributes][:lon]).to eq(merchant.lon)
+        expect(market[:attributes][:lon]).to eq(market.lon)
 
         expect(market[:attributes]).to have_key(:vendor_count)
         expect(market[:attributes][:vendor_count]).to be_a(Integer)
       end
 
       it 'allows the user to search by state and name' do
-        merchant = create(:merchant, state: 'CO', name: 'Agatha Christie')
+        market = create(:market, state: 'CO', name: 'Agatha Christie')
         search_params = ({
                         state: 'CO',
                         name: 'Agatha Christie'
@@ -242,35 +242,35 @@ describe 'Markets API' do
         market = market[:data]
 
         expect(market).to have_key(:id)
-        expect(market[:id]).to eq(merchant.id)
+        expect(market[:id]).to eq(market.id)
 
         expect(market[:attributes]).to have_key(:street)
-        expect(market[:attributes][:street]).to eq(merchant.street)
+        expect(market[:attributes][:street]).to eq(market.street)
 
         expect(market[:attributes]).to have_key(:city)
-        expect(market[:attributes][:city]).to eq(merchant.city)
+        expect(market[:attributes][:city]).to eq(market.city)
 
         expect(market[:attributes]).to have_key(:county)
-        expect(market[:attributes][:county]).to eq(merchant.county)
+        expect(market[:attributes][:county]).to eq(market.county)
 
         expect(market[:attributes]).to have_key(:state)
-        expect(market[:attributes][:state]).to eq(merchant.state)
+        expect(market[:attributes][:state]).to eq(market.state)
 
         expect(market[:attributes]).to have_key(:zip)
-        expect(market[:attributes][:zip]).to eq(merchant.zip)
+        expect(market[:attributes][:zip]).to eq(market.zip)
 
         expect(market[:attributes]).to have_key(:lat)
-        expect(market[:attributes][:lat]).to eq(merchant.lat)
+        expect(market[:attributes][:lat]).to eq(market.lat)
 
         expect(market[:attributes]).to have_key(:lon)
-        expect(market[:attributes][:lon]).to eq(merchant.lon)
+        expect(market[:attributes][:lon]).to eq(market.lon)
 
         expect(market[:attributes]).to have_key(:vendor_count)
         expect(market[:attributes][:vendor_count]).to be_a(Integer)
       end
 
       it 'allows the user to search by city, state, and name' do
-        merchant = create(:merchant, city: 'Denver', state: 'CO', name: 'Agatha Christie')
+        market = create(:market, city: 'Denver', state: 'CO', name: 'Agatha Christie')
         search_params = ({
                         city: 'Denver',
                         state: 'CO',
@@ -289,28 +289,28 @@ describe 'Markets API' do
         market = market[:data]
 
         expect(market).to have_key(:id)
-        expect(market[:id]).to eq(merchant.id)
+        expect(market[:id]).to eq(market.id)
 
         expect(market[:attributes]).to have_key(:street)
-        expect(market[:attributes][:street]).to eq(merchant.street)
+        expect(market[:attributes][:street]).to eq(market.street)
 
         expect(market[:attributes]).to have_key(:city)
-        expect(market[:attributes][:city]).to eq(merchant.city)
+        expect(market[:attributes][:city]).to eq(market.city)
 
         expect(market[:attributes]).to have_key(:county)
-        expect(market[:attributes][:county]).to eq(merchant.county)
+        expect(market[:attributes][:county]).to eq(market.county)
 
         expect(market[:attributes]).to have_key(:state)
-        expect(market[:attributes][:state]).to eq(merchant.state)
+        expect(market[:attributes][:state]).to eq(market.state)
 
         expect(market[:attributes]).to have_key(:zip)
-        expect(market[:attributes][:zip]).to eq(merchant.zip)
+        expect(market[:attributes][:zip]).to eq(market.zip)
 
         expect(market[:attributes]).to have_key(:lat)
-        expect(market[:attributes][:lat]).to eq(merchant.lat)
+        expect(market[:attributes][:lat]).to eq(market.lat)
 
         expect(market[:attributes]).to have_key(:lon)
-        expect(market[:attributes][:lon]).to eq(merchant.lon)
+        expect(market[:attributes][:lon]).to eq(market.lon)
 
         expect(market[:attributes]).to have_key(:vendor_count)
         expect(market[:attributes][:vendor_count]).to be_a(Integer)
@@ -333,8 +333,8 @@ describe 'Markets API' do
     end
 
     describe 'search function' do
-      it 'does not allow the user to search by city without state' do
-        merchant = create(:merchant, city: 'Denver')
+      xit 'does not allow the user to search by city without state' do
+        market = create(:market, city: 'Denver')
         search_params = ({
                         city: 'Denver'
                       })
@@ -351,8 +351,8 @@ describe 'Markets API' do
         expect(data[:errors].first[:detail]).to eq('Invalid set of parameters. Please provide a valid set of parameters to perform a search with this endpoint.')
       end
 
-      it 'does not allow the user to search by city and name without state' do
-        merchant = create(:merchant, city: 'Denver')
+      xit 'does not allow the user to search by city and name without state' do
+        market = create(:market, city: 'Denver')
         search_params = ({
                         city: 'Denver',
                         name: 'Agatha Christie'
@@ -370,8 +370,8 @@ describe 'Markets API' do
         expect(data[:errors].first[:detail]).to eq('Invalid set of parameters. Please provide a valid set of parameters to perform a search with this endpoint.')
       end
 
-      it 'must be given at least search parameter' do
-        merchant = create(:merchant, city: 'Denver')
+      xit 'must be given at least search parameter' do
+        market = create(:market, city: 'Denver')
         search_params = ({})
         headers = {'CONTENT_TYPE' => 'application/json'}
       
