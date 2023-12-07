@@ -96,38 +96,38 @@ describe 'Markets API' do
 
         expect(response).to be_successful
 
-        market = JSON.parse(response.body, symbolize_names: true)
+        market_info = JSON.parse(response.body, symbolize_names: true)
 
-        expect(market).to be_a(Hash)
+        expect(market_info).to be_a(Hash)
 
-        market = market[:data]
+        market_info = market_info[:data]
 
-        expect(market).to have_key(:id)
-        expect(market[:id]).to eq(market.id)
+        expect(market_info).to have_key(:id)
+        expect(market_info[:id]).to eq(market.id.to_s)
 
-        expect(market[:attributes]).to have_key(:street)
-        expect(market[:attributes][:street]).to eq(market.street)
+        expect(market_info[:attributes]).to have_key(:street)
+        expect(market_info[:attributes][:street]).to eq(market.street)
 
-        expect(market[:attributes]).to have_key(:city)
-        expect(market[:attributes][:city]).to eq(market.city)
+        expect(market_info[:attributes]).to have_key(:city)
+        expect(market_info[:attributes][:city]).to eq(market.city)
 
-        expect(market[:attributes]).to have_key(:county)
-        expect(market[:attributes][:county]).to eq(market.county)
+        expect(market_info[:attributes]).to have_key(:county)
+        expect(market_info[:attributes][:county]).to eq(market.county)
 
-        expect(market[:attributes]).to have_key(:state)
-        expect(market[:attributes][:state]).to eq(market.state)
+        expect(market_info[:attributes]).to have_key(:state)
+        expect(market_info[:attributes][:state]).to eq(market.state)
 
-        expect(market[:attributes]).to have_key(:zip)
-        expect(market[:attributes][:zip]).to eq(market.zip)
+        expect(market_info[:attributes]).to have_key(:zip)
+        expect(market_info[:attributes][:zip]).to eq(market.zip)
 
-        expect(market[:attributes]).to have_key(:lat)
-        expect(market[:attributes][:lat]).to eq(market.lat)
+        expect(market_info[:attributes]).to have_key(:lat)
+        expect(market_info[:attributes][:lat]).to eq(market.lat)
 
-        expect(market[:attributes]).to have_key(:lon)
-        expect(market[:attributes][:lon]).to eq(market.lon)
+        expect(market_info[:attributes]).to have_key(:lon)
+        expect(market_info[:attributes][:lon]).to eq(market.lon)
 
-        expect(market[:attributes]).to have_key(:vendor_count)
-        expect(market[:attributes][:vendor_count]).to be_a(Integer)
+        expect(market_info[:attributes]).to have_key(:vendor_count)
+        expect(market_info[:attributes][:vendor_count]).to be_a(Integer)
       end
 
       xit 'allows the user to search by name only' do
@@ -141,38 +141,38 @@ describe 'Markets API' do
 
         expect(response).to be_successful
 
-        market = JSON.parse(response.body, symbolize_names: true)
+        market_info = JSON.parse(response.body, symbolize_names: true)
 
-        expect(market).to be_a(Hash)
+        expect(market_info).to be_a(Hash)
 
-        market = market[:data]
+        market_info = market_info[:data]
 
-        expect(market).to have_key(:id)
-        expect(market[:id]).to eq(market.id)
+        expect(market_info).to have_key(:id)
+        expect(market_info[:id]).to eq(market.id.to_s)
 
-        expect(market[:attributes]).to have_key(:street)
-        expect(market[:attributes][:street]).to eq(market.street)
+        expect(market_info[:attributes]).to have_key(:street)
+        expect(market_info[:attributes][:street]).to eq(market.street)
 
-        expect(market[:attributes]).to have_key(:city)
-        expect(market[:attributes][:city]).to eq(market.city)
+        expect(market_info[:attributes]).to have_key(:city)
+        expect(market_info[:attributes][:city]).to eq(market.city)
 
-        expect(market[:attributes]).to have_key(:county)
-        expect(market[:attributes][:county]).to eq(market.county)
+        expect(market_info[:attributes]).to have_key(:county)
+        expect(market_info[:attributes][:county]).to eq(market.county)
 
-        expect(market[:attributes]).to have_key(:state)
-        expect(market[:attributes][:state]).to eq(market.state)
+        expect(market_info[:attributes]).to have_key(:state)
+        expect(market_info[:attributes][:state]).to eq(market.state)
 
-        expect(market[:attributes]).to have_key(:zip)
-        expect(market[:attributes][:zip]).to eq(market.zip)
+        expect(market_info[:attributes]).to have_key(:zip)
+        expect(market_info[:attributes][:zip]).to eq(market.zip)
 
-        expect(market[:attributes]).to have_key(:lat)
-        expect(market[:attributes][:lat]).to eq(market.lat)
+        expect(market_info[:attributes]).to have_key(:lat)
+        expect(market_info[:attributes][:lat]).to eq(market.lat)
 
-        expect(market[:attributes]).to have_key(:lon)
-        expect(market[:attributes][:lon]).to eq(market.lon)
+        expect(market_info[:attributes]).to have_key(:lon)
+        expect(market_info[:attributes][:lon]).to eq(market.lon)
 
-        expect(market[:attributes]).to have_key(:vendor_count)
-        expect(market[:attributes][:vendor_count]).to be_a(Integer)
+        expect(market_info[:attributes]).to have_key(:vendor_count)
+        expect(market_info[:attributes][:vendor_count]).to be_a(Integer)
       end
 
       xit 'allows the user to search by city and state' do
@@ -187,38 +187,38 @@ describe 'Markets API' do
 
         expect(response).to be_successful
 
-        market = JSON.parse(response.body, symbolize_names: true)
+        market_info = JSON.parse(response.body, symbolize_names: true)
 
-        expect(market).to be_a(Hash)
+        expect(market_info).to be_a(Hash)
 
-        market = market[:data]
+        market_info = market_info[:data]
 
-        expect(market).to have_key(:id)
-        expect(market[:id]).to eq(market.id)
+        expect(market_info).to have_key(:id)
+        expect(market_info[:id]).to eq(market.id.to_s)
 
-        expect(market[:attributes]).to have_key(:street)
-        expect(market[:attributes][:street]).to eq(market.street)
+        expect(market_info[:attributes]).to have_key(:street)
+        expect(market_info[:attributes][:street]).to eq(market.street)
 
-        expect(market[:attributes]).to have_key(:city)
-        expect(market[:attributes][:city]).to eq(market.city)
+        expect(market_info[:attributes]).to have_key(:city)
+        expect(market_info[:attributes][:city]).to eq(market.city)
 
-        expect(market[:attributes]).to have_key(:county)
-        expect(market[:attributes][:county]).to eq(market.county)
+        expect(market_info[:attributes]).to have_key(:county)
+        expect(market_info[:attributes][:county]).to eq(market.county)
 
-        expect(market[:attributes]).to have_key(:state)
-        expect(market[:attributes][:state]).to eq(market.state)
+        expect(market_info[:attributes]).to have_key(:state)
+        expect(market_info[:attributes][:state]).to eq(market.state)
 
-        expect(market[:attributes]).to have_key(:zip)
-        expect(market[:attributes][:zip]).to eq(market.zip)
+        expect(market_info[:attributes]).to have_key(:zip)
+        expect(market_info[:attributes][:zip]).to eq(market.zip)
 
-        expect(market[:attributes]).to have_key(:lat)
-        expect(market[:attributes][:lat]).to eq(market.lat)
+        expect(market_info[:attributes]).to have_key(:lat)
+        expect(market_info[:attributes][:lat]).to eq(market.lat)
 
-        expect(market[:attributes]).to have_key(:lon)
-        expect(market[:attributes][:lon]).to eq(market.lon)
+        expect(market_info[:attributes]).to have_key(:lon)
+        expect(market_info[:attributes][:lon]).to eq(market.lon)
 
-        expect(market[:attributes]).to have_key(:vendor_count)
-        expect(market[:attributes][:vendor_count]).to be_a(Integer)
+        expect(market_info[:attributes]).to have_key(:vendor_count)
+        expect(market_info[:attributes][:vendor_count]).to be_a(Integer)
       end
 
       xit 'allows the user to search by state and name' do
@@ -233,38 +233,38 @@ describe 'Markets API' do
 
         expect(response).to be_successful
 
-        market = JSON.parse(response.body, symbolize_names: true)
+        market_info = JSON.parse(response.body, symbolize_names: true)
 
-        expect(market).to be_a(Hash)
+        expect(market_info).to be_a(Hash)
 
-        market = market[:data]
+        market_info = market_info[:data]
 
-        expect(market).to have_key(:id)
-        expect(market[:id]).to eq(market.id)
+        expect(market_info).to have_key(:id)
+        expect(market_info[:id]).to eq(market.id.to_s)
 
-        expect(market[:attributes]).to have_key(:street)
-        expect(market[:attributes][:street]).to eq(market.street)
+        expect(market_info[:attributes]).to have_key(:street)
+        expect(market_info[:attributes][:street]).to eq(market.street)
 
-        expect(market[:attributes]).to have_key(:city)
-        expect(market[:attributes][:city]).to eq(market.city)
+        expect(market_info[:attributes]).to have_key(:city)
+        expect(market_info[:attributes][:city]).to eq(market.city)
 
-        expect(market[:attributes]).to have_key(:county)
-        expect(market[:attributes][:county]).to eq(market.county)
+        expect(market_info[:attributes]).to have_key(:county)
+        expect(market_info[:attributes][:county]).to eq(market.county)
 
-        expect(market[:attributes]).to have_key(:state)
-        expect(market[:attributes][:state]).to eq(market.state)
+        expect(market_info[:attributes]).to have_key(:state)
+        expect(market_info[:attributes][:state]).to eq(market.state)
 
-        expect(market[:attributes]).to have_key(:zip)
-        expect(market[:attributes][:zip]).to eq(market.zip)
+        expect(market_info[:attributes]).to have_key(:zip)
+        expect(market_info[:attributes][:zip]).to eq(market.zip)
 
-        expect(market[:attributes]).to have_key(:lat)
-        expect(market[:attributes][:lat]).to eq(market.lat)
+        expect(market_info[:attributes]).to have_key(:lat)
+        expect(market_info[:attributes][:lat]).to eq(market.lat)
 
-        expect(market[:attributes]).to have_key(:lon)
-        expect(market[:attributes][:lon]).to eq(market.lon)
+        expect(market_info[:attributes]).to have_key(:lon)
+        expect(market_info[:attributes][:lon]).to eq(market.lon)
 
-        expect(market[:attributes]).to have_key(:vendor_count)
-        expect(market[:attributes][:vendor_count]).to be_a(Integer)
+        expect(market_info[:attributes]).to have_key(:vendor_count)
+        expect(market_info[:attributes][:vendor_count]).to be_a(Integer)
       end
 
       xit 'allows the user to search by city, state, and name' do
@@ -287,7 +287,7 @@ describe 'Markets API' do
         market = market[:data]
 
         expect(market).to have_key(:id)
-        expect(market[:id]).to eq(market.id)
+        expect(market_info[:id]).to eq(market.id.to_s)
 
         expect(market[:attributes]).to have_key(:street)
         expect(market[:attributes][:street]).to eq(market.street)
