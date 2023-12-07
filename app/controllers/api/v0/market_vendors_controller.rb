@@ -1,10 +1,31 @@
 class Api::V0::MarketVendorsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found_response
-  rescue_from ActiveRecord::RecordInvalid, with: :bad_request_response
+  # rescue_from ActiveRecord::RecordInvalid, with: :bad_request_response
+  # rescue_from ActiveRecord::RecordNotSaved, with: :invalid_record_response
 
   def create
-    market_vendor = MarketVendor.create!(market_vendor_params)
-    render json: MarketVendorSerializer.new(market_vendor), status: 201
+    begin
+      market_vendor = MarketVendor.create!(market_vendor_params)
+      render json: MarketVendorSerializer.new(market_vendor), status: 201
+    rescue ActiveRecord::RecordInvalid => invalid
+      market_id = invalid.record.market_id
+      vendor_id = invalid.record.vendor_id
+      if MarketVendor.find_by(market_id: market_id, vendor_id: vendor_id).present?
+        render json: ErrorSerializer.new(ErrorMessage.new("Validation failed: Market vendor asociation between market with market_id=#{market_id} and vendor_id=#{vendor_id} already exists", 422))
+        .serialize_json, status: :unprocessable_entity
+      elsif market_id.nil? || vendor_id.nil?
+        render json: ErrorSerializer.new(ErrorMessage.new(invalid.message, 400))
+        .serialize_json, status: :bad_request
+      elsif market_id != nil && vendor_id != nil
+        render json: ErrorSerializer.new(ErrorMessage.new(invalid.message, 404))
+        .serialize_json, status: :not_found
+      end
+    end
+  end
+
+  def destroy
+    market_vendor = MarketVendor.find(market_vendor_params)
+    render json: MarketVendor.delete(market_vendor), status: 204
   end
 
   private
@@ -19,12 +40,12 @@ class Api::V0::MarketVendorsController < ApplicationController
     end
 
     def bad_request_response(exception)
-      # if 
-        render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 400))
-          .serialize_json, status: :bad_request
-      # elsif 
-        # render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 404))
-        #   .serialize_json, status: :not_found
-      # end
+      render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 400))
+        .serialize_json, status: :bad_request
     end
+
+    # def invalid_record_response(exception)
+    #   render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 400))
+    #     .serialize_json, status: :invalid_record
+    # end
 end

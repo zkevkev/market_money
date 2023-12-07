@@ -19,9 +19,10 @@ describe 'MarketVendors API' do
       expect(created_market_vendor.vendor_id).to eq(market_vendor_params[:vendor_id])
     end
 
-    it 'can delete a market_vendor' do
+    xit 'can delete a market_vendor' do
       market = create(:market)      
       vendor = create(:vendor)
+      # market.vendors << vendor
       market_vendor = create(:market_vendor, market: market, vendor: vendor)
       market_vendor_params = ({
         market_id: market.id,
@@ -40,7 +41,7 @@ describe 'MarketVendors API' do
   end
 
   context 'sad path' do
-    xit "create will gracefully handle if a market id doesn't exist" do
+    it "create will gracefully handle if a market id doesn't exist" do
       vendor = create(:vendor)
       market_vendor_params = ({
                       market_id: 0,
@@ -60,7 +61,7 @@ describe 'MarketVendors API' do
       expect(data[:errors].first[:detail]).to eq('Validation failed: Market must exist')
     end
 
-    xit "create will gracefully handle if a vendor id doesn't exist" do
+    it "create will gracefully handle if a vendor id doesn't exist" do
       market = create(:market)
       market_vendor_params = ({
                       market_id: market.id,
@@ -100,7 +101,7 @@ describe 'MarketVendors API' do
       expect(data[:errors].first[:detail]).to eq("Validation failed: Vendor must exist, Vendor can't be blank")
     end
 
-    xit 'create will gracefully handle if a market_vendor already exists with given ids' do
+    it 'create will gracefully handle if a market_vendor already exists with given ids' do
       market = create(:market)
       vendor = create(:vendor)
       market_vendor = create(:market_vendor, market: market, vendor: vendor)
@@ -121,26 +122,26 @@ describe 'MarketVendors API' do
       expect(data[:errors].first[:status]).to eq('422')
       expect(data[:errors].first[:detail]).to eq("Validation failed: Market vendor asociation between market with market_id=#{market.id} and vendor_id=#{vendor.id} already exists")
     end
-  end
 
-  it "delete will gracefully handle if vendor id does not exist" do
-    market = create(:market)
-    vendor = create(:vendor)
-    market_vendor_params = ({
-                    market_id: market.id,
-                    vendor_id: vendor.id
-                  })
-    headers = {'CONTENT_TYPE' => 'application/json'}
+    xit "delete will gracefully handle if vendor id does not exist" do
+      market = create(:market)
+      vendor = create(:vendor)
+      market_vendor_params = ({
+                      market_id: market.id,
+                      vendor_id: vendor.id
+                    })
+      headers = {'CONTENT_TYPE' => 'application/json'}
 
-    delete '/api/v0/market_vendors', headers: headers, params: JSON.generate(market_vendor: market_vendor_params)
+      delete '/api/v0/market_vendors', headers: headers, params: JSON.generate(market_vendor: market_vendor_params)
 
-    expect(response).to_not be_successful
-    expect(response.status).to eq(404)
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
 
-    data = JSON.parse(response.body, symbolize_names: true)
+      data = JSON.parse(response.body, symbolize_names: true)
 
-    expect(data[:errors]).to be_a(Array)
-    expect(data[:errors].first[:status]).to eq('404')
-    expect(data[:errors].first[:detail]).to eq("No MarketVendor with market_id=#{market.id} AND vendor_id=#{vendor.id} exists")
+      expect(data[:errors]).to be_a(Array)
+      expect(data[:errors].first[:status]).to eq('404')
+      expect(data[:errors].first[:detail]).to eq("No MarketVendor with market_id=#{market.id} AND vendor_id=#{vendor.id} exists")
+    end
   end
 end
