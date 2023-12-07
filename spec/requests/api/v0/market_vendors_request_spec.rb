@@ -19,12 +19,12 @@ describe 'MarketVendors API' do
       expect(created_market_vendor.vendor_id).to eq(market_vendor_params[:vendor_id])
     end
 
-    xit 'can delete a market_vendor' do
+    it 'can delete a market_vendor' do
       market = create(:market)      
       vendor = create(:vendor)
       # market.vendors << vendor
       market_vendor = create(:market_vendor, market: market, vendor: vendor)
-      market_vendor_params = ({
+      market_vendor_info = ({
         market_id: market.id,
         vendor_id: vendor.id
       })
@@ -32,7 +32,7 @@ describe 'MarketVendors API' do
 
       expect(MarketVendor.count).to eq(1)
 
-      delete '/api/v0/market_vendors', headers: headers, params: JSON.generate(market_vendor: market_vendor_params)
+      delete '/api/v0/market_vendors', headers: headers, params: JSON.generate(market_vendor: market_vendor_info)
 
       expect(response).to be_successful
       expect(MarketVendor.count).to eq(0)
@@ -123,7 +123,7 @@ describe 'MarketVendors API' do
       expect(data[:errors].first[:detail]).to eq("Validation failed: Market vendor asociation between market with market_id=#{market.id} and vendor_id=#{vendor.id} already exists")
     end
 
-    xit "delete will gracefully handle if vendor id does not exist" do
+    it "delete will gracefully handle if a market_vendor for given ids does not exist" do
       market = create(:market)
       vendor = create(:vendor)
       market_vendor_params = ({

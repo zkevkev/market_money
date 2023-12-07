@@ -9,10 +9,10 @@ class MarketVendor < ApplicationRecord
 
   private
 
-    def validate_uniqueness
-      market_vendor = MarketVendor.find_by(market_id: market_id, vendor_id: vendor_id)
-      if market_vendor != self or nil
-        errors.add(:market_id, "Validation failed: Market vendor asociation between market with market_id=#{market_id} and vendor_id=#{vendor_id} already exists")
-      end
-    end
+    # def validate_uniqueness
+    #   market_vendor = MarketVendor.find_by(market_id: market_id, vendor_id: vendor_id)
+    #   if market_vendor != self or nil
+    #     errors.add(:market_id, "Validation failed: Market vendor asociation between market with market_id=#{market_id} and vendor_id=#{vendor_id} already exists")
+    #   end
+    # end
 end

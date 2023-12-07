@@ -3,6 +3,7 @@ class Api::V0::MarketVendorsController < ApplicationController
   # rescue_from ActiveRecord::RecordInvalid, with: :bad_request_response
   # rescue_from ActiveRecord::RecordNotSaved, with: :invalid_record_response
 
+  # refactor this nonsense
   def create
     begin
       market_vendor = MarketVendor.create!(market_vendor_params)
@@ -24,8 +25,13 @@ class Api::V0::MarketVendorsController < ApplicationController
   end
 
   def destroy
-    market_vendor = MarketVendor.find(market_vendor_params)
-    render json: MarketVendor.delete(market_vendor), status: 204
+    market_vendor = MarketVendor.find_by(market_vendor_params)
+    if market_vendor.nil?
+      render json: ErrorSerializer.new(ErrorMessage.new("No MarketVendor with market_id=#{market_vendor_params[:market_id]} AND vendor_id=#{market_vendor_params[:vendor_id]} exists", 404))
+        .serialize_json, status: :not_found
+    else
+      render json: MarketVendor.delete(market_vendor), status: 204
+    end
   end
 
   private
@@ -39,10 +45,10 @@ class Api::V0::MarketVendorsController < ApplicationController
         .serialize_json, status: :not_found
     end
 
-    def bad_request_response(exception)
-      render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 400))
-        .serialize_json, status: :bad_request
-    end
+    # def bad_request_response(exception)
+    #   render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 400))
+    #     .serialize_json, status: :bad_request
+    # end
 
     # def invalid_record_response(exception)
     #   render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 400))
