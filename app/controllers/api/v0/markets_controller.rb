@@ -9,19 +9,25 @@ class Api::V0::MarketsController < ApplicationController
 
   def search
     # all combos valid except if city is passed state must also be passed
-    if params[:city].present? && params[:state].nil?
+    search_param_string = params.keys.find { |key| key.include?('search') }
+    search_params = JSON.parse(search_param_string)
+    city_param = search_params["search"]["city"]
+    state_param = search_params["search"]["state"]
+    name_param = search_params["search"]["name"]
+    if city_param.present? && state_param.nil?
       # error condition
-    elsif params[:state].nil? && params[:city].nil? && params[:name].nil?
+    elsif state_param.nil? && city_param.nil? && name_param.nil?
       # error condition
-    elsif params[:state].present? && params[:city].nil? && params[:name].nil?
+    elsif state_param.present? && city_param.nil? && name_param.nil?
       # state
-    elsif params[:state].nil? && params[:city].nil? && params[:name].present?
+      render json: MarketSerializer.new(Market.find_by(state: state_param.to_sym))
+    elsif state_param.nil? && city_param.nil? && name_param.present?
       # name
-    elsif params[:state].present? && params[:city].present? && params[:name].nil?
+    elsif state_param.present? && city_param.present? && name_param.nil?
       # state + city
-    elsif params[:state].present? && params[:city].nil? && params[:name].present?
+    elsif state_param.present? && city_param.nil? && name_param.present?
       # state + name
-    elsif params[:state].present? && params[:city].present? && params[:name].present?
+    elsif state_param.present? && city_param.present? && name_param.present?
       # state + city + name
     end
   end
