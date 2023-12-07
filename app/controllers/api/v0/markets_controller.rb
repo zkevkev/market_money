@@ -23,6 +23,7 @@ class Api::V0::MarketsController < ApplicationController
       render json: MarketSerializer.new(Market.find_by(state: state_param.to_sym))
     elsif state_param.nil? && city_param.nil? && name_param.present?
       # name
+      render json: MarketSerializer.new(Market.find_by(name: name_param))
     elsif state_param.present? && city_param.present? && name_param.nil?
       # state + city
     elsif state_param.present? && city_param.nil? && name_param.present?
