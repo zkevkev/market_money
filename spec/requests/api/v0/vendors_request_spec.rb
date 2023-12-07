@@ -166,7 +166,7 @@ describe 'Vendors API' do
       data = JSON.parse(response.body, symbolize_names: true)
 
       expect(data[:errors]).to be_a(Array)
-      expect(data[:errors].first[:status]).to eq("400")
+      expect(data[:errors].first[:status]).to eq('400')
       expect(data[:errors].first[:detail]).to eq("Validation failed: Contact name can't be blank, Contact phone can't be blank")
     end
 
