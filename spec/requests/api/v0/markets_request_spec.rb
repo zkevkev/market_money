@@ -94,6 +94,7 @@ describe 'Markets API' do
 
     describe 'search function' do
       it 'allows the user to search by state only' do
+        Market.destroy_all
         market = create(:market, state: 'CO')
         other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = { state: 'CO' }
@@ -141,6 +142,7 @@ describe 'Markets API' do
       end
 
       it 'allows the user to search by name only' do
+        Market.destroy_all
         market = create(:market, name: 'Agatha Christie')
         other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = ({
@@ -190,6 +192,7 @@ describe 'Markets API' do
       end
 
       it 'allows the user to search by city and state' do
+        Market.destroy_all
         market = create(:market, city: 'Denver', state: 'CO')
         other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = ({
@@ -240,6 +243,7 @@ describe 'Markets API' do
       end
 
       it 'allows the user to search by state and name' do
+        Market.destroy_all
         market = create(:market, state: 'CO', name: 'Agatha Christie')
         other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = ({
@@ -290,6 +294,7 @@ describe 'Markets API' do
       end
 
       it 'allows the user to search by city, state, and name' do
+        Market.destroy_all
         market = create(:market, city: 'Denver', state: 'CO', name: 'Agatha Christie')
         other_market = create(:market, city: 'Baltimore', state: 'MD', name: "Mark's Market")
         search_params = ({
@@ -358,6 +363,7 @@ describe 'Markets API' do
 
     describe 'search function' do
       it 'does not allow the user to search by city without state' do
+        Market.destroy_all
         market = create(:market, city: 'Denver')
         search_params = ({
                         city: 'Denver'
@@ -376,6 +382,7 @@ describe 'Markets API' do
       end
 
       it 'does not allow the user to search by city and name without state' do
+        Market.destroy_all
         market = create(:market, city: 'Denver')
         search_params = ({
                         city: 'Denver',
@@ -395,6 +402,7 @@ describe 'Markets API' do
       end
 
       it 'must be given at least search parameter' do
+        Market.destroy_all
         market = create(:market, city: 'Denver')
         search_params = ({})
         headers = {'CONTENT_TYPE' => 'application/json'}
